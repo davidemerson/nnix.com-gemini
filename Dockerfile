@@ -9,4 +9,4 @@ RUN apt-get update && \
 
 COPY index.gmi /var/gemini/
 
-CMD ["agate", "--content /var/gemini --key key.rsa --cert cert.pem --addr :::1965 --addr 0.0.0.0:1965 --hostname example.com --lang en-US;"]
+RUN agate --content /var/gemini --key key.rsa --cert cert.pem --addr :::1965 --addr 0.0.0.0:1965 --hostname example.com --lang en-US

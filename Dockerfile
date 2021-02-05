@@ -13,4 +13,4 @@ ENV PATH "$PATH:/root/.cargo/bin"
 
 COPY index.gmi /var/gemini/
 
-CMD ["agate", "--content /var/gemini/", "--key key.rsa", "--cert cert.pem", "--addr 0.0.0.0:1965", "--hostname nnix.com", "--lang en-US"]
+RUN nohup agate --content /var/gemini --key key.rsa --cert cert.pem --addr 0.0.0.0:1965 --hostname nnix.com --lang en-US &

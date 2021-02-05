@@ -7,7 +7,7 @@ RUN apt-get update && \
     openssl req -x509 -newkey rsa:4096 -keyout key.rsa -out cert.pem -days 3650 -nodes -subj "/CN=nnix.com" && \
     mkdir /var/gemini
 
-ENV PATH "$PATH:~/.cargo/bin"
+ENV PATH "$PATH:/root/.cargo/bin"
 
 COPY index.gmi /var/gemini/
 

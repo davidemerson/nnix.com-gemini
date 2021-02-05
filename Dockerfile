@@ -5,8 +5,9 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     cargo install agate && \
     openssl req -x509 -newkey rsa:4096 -keyout key.rsa -out cert.pem -days 3650 -nodes -subj "/CN=nnix.com" && \
-    mkdir /var/gemini
+    mkdir /var/gemini && \
+    export PATH=$PATH:/root/.cargo/bin
 
 COPY index.gmi /var/gemini/
 
-RUN agate --content /var/gemini --key key.rsa --cert cert.pem --addr :::1965 --addr 0.0.0.0:1965 --hostname example.com --lang en-US
+RUN agate --content /var/gemini --key key.rsa --cert cert.pem --addr 0.0.0.0:1965 --hostname nnix.com --lang en-US

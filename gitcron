@@ -1,0 +1,1 @@
+*/5 * * * * /usr/local/gemini/release-watcher.sh > /dev/null 2>&1

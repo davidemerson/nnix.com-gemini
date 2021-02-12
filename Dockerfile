@@ -12,7 +12,7 @@ RUN cargo build --release
 RUN openssl req -x509 -newkey rsa:4096 -keyout gemini-key.rsa \
   -out gemini-cert.pem -days 4096 -nodes -subj "/CN=nnix.com"
 
-FROM debian:buster-slim
+FROM debian:buster
 
 RUN apt-get -y install git cron
 

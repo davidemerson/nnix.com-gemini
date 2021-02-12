@@ -25,9 +25,7 @@ COPY --from=build /usr/src/agate/gemini-cert.pem  conf/gemini-cert.pem
 COPY release-watcher.sh /usr/local/gemini/release-watcher.sh
 RUN chmod 744 /usr/local/gemini/release-watcher.sh
 
-COPY gitcron /etc/cron.d/gitcron
-RUN chmod 744 /etc/cron.d/gitcron
-RUN crontab /etc/cron.d/gitcron
+RUN (crontab -l ; echo "*/5 * * * * /usr/local/gemini/release-watcher.sh > /dev/null 2>&1") | crontab
 RUN cron &
 
 EXPOSE 1965/tcp

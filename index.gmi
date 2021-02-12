@@ -9,6 +9,7 @@ Content over bling. There will be more content here eventually.
 
 ## Gemini Links
 => gemini://gemini.circumlunar.space/ the main project page
+=> https://ondollo.com/mansfield the mansfield client (sorry, I need to find a gemini link for this)
 
 ## Contact
 => https://davidemerson.com

@@ -14,6 +14,7 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout gemini-key.rsa \
 
 FROM debian:buster
 
+RUN apt-get update
 RUN apt-get -y install git cron
 
 WORKDIR /usr/local/gemini

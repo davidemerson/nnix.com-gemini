@@ -1,7 +1,7 @@
 FROM rust:latest AS build
 
 RUN apt-get update
-RUN apt-get install openssl
+RUN apt-get -y install openssl
 
 WORKDIR /usr/src/agate
 COPY ./Cargo.* ./
@@ -14,11 +14,20 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout gemini-key.rsa \
 
 FROM debian:buster-slim
 
+RUN apt-get -y install git cron
+
 WORKDIR /usr/local/gemini
-COPY index.gmi geminidocs/index.gmi
+RUN git clone https://github.com/davidemerson/capsule.git geminidocs/
 COPY --from=build /usr/src/agate/target/release/agate /usr/local/bin
 COPY --from=build /usr/src/agate/gemini-key.rsa   conf/gemini-key.rsa
 COPY --from=build /usr/src/agate/gemini-cert.pem  conf/gemini-cert.pem
+COPY release-watcher.sh release-watcher.sh
+RUN chmod 744 release-watcher.sh
+
+COPY gitcron /etc/cron.d/gitcron
+RUN chmod 744 /etc/cron.d/gitcron
+RUN crontab /etc/cron.d/gitcron
+RUN cron &
 
 EXPOSE 1965/tcp
 CMD [ "agate", "0.0.0.0:1965", "geminidocs", "conf/gemini-cert.pem", "conf/gemini-key.rsa" ]

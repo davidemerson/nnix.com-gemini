@@ -18,12 +18,12 @@ RUN apt-get update
 RUN apt-get -y install git cron
 
 WORKDIR /usr/local/gemini
-RUN git clone https://github.com/davidemerson/capsule.git geminidocs/
+RUN git clone https://github.com/davidemerson/capsule.git /usr/local/gemini/geminidocs/
 COPY --from=build /usr/src/agate/target/release/agate /usr/local/bin
 COPY --from=build /usr/src/agate/gemini-key.rsa   conf/gemini-key.rsa
 COPY --from=build /usr/src/agate/gemini-cert.pem  conf/gemini-cert.pem
-COPY release-watcher.sh release-watcher.sh
-RUN chmod 744 release-watcher.sh
+COPY release-watcher.sh /usr/local/gemini/release-watcher.sh
+RUN chmod 744 /usr/local/gemini/release-watcher.sh
 
 COPY gitcron /etc/cron.d/gitcron
 RUN chmod 744 /etc/cron.d/gitcron

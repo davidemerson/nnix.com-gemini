@@ -1,1 +1,1 @@
-*/1 * * * * su -s /bin/sh nobody -c 'cd /var/capsule && /usr/bin/git pull origin master'
+*/1 * * * * cd /var/capsule && /usr/bin/git pull origin main

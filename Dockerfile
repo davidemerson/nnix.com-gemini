@@ -14,19 +14,10 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout gemini-key.rsa \
 
 FROM debian:buster
 
-RUN apt-get update
-RUN apt-get -y install git cron
-
 WORKDIR /usr/local/gemini
-RUN git clone https://github.com/davidemerson/capsule.git /usr/local/gemini/geminidocs/
 COPY --from=build /usr/src/agate/target/release/agate /usr/local/bin
 COPY --from=build /usr/src/agate/gemini-key.rsa   conf/gemini-key.rsa
 COPY --from=build /usr/src/agate/gemini-cert.pem  conf/gemini-cert.pem
-COPY release-watcher.sh /usr/local/gemini/release-watcher.sh
-RUN chmod 744 /usr/local/gemini/release-watcher.sh
-
-RUN (crontab -l ; echo "*/5 * * * * /usr/local/gemini/release-watcher.sh > /dev/null 2>&1") | crontab
-RUN cron &
 
 EXPOSE 1965/tcp
 CMD [ "agate", "0.0.0.0:1965", "geminidocs", "conf/gemini-cert.pem", "conf/gemini-key.rsa" ]
